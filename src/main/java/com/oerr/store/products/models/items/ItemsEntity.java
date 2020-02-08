@@ -22,6 +22,14 @@ public class ItemsEntity {
     public ItemsEntity() {
     }
 
+    public ItemsEntity(String itemName, String itemDescription, int itemStockNumber, boolean itemHasStock) {
+        this.itemName = itemName;
+        this.itemDescription = itemDescription;
+        this.itemStockNumber = itemStockNumber;
+        this.itemHasStock = itemHasStock;
+
+    }
+
     public long getItemId() {
         return itemId;
     }

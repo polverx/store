@@ -1,6 +1,5 @@
 package com.oerr.store.products.models.items;
 
-import com.oerr.store.products.models.users.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -28,6 +27,8 @@ public class ItemsImpl implements ItemsService {
         Optional<ItemsEntity> item = itemsRepository.findById(itemId);
 
         return item;
+
+
     }
 
     @Override
@@ -40,11 +41,11 @@ public class ItemsImpl implements ItemsService {
 
         Optional<ItemsEntity> idSearched = itemsRepository.findById(itemId);
 
-        if(idSearched.isPresent()) {
-            idSearched.ifPresent(result -> {
-                itemsRepository.delete(result);
-            });
+        if (idSearched.isPresent()) {
+
+            idSearched.ifPresent(item -> itemsRepository.delete(item));
             return HttpStatus.ACCEPTED;
+
         }
         return HttpStatus.NOT_FOUND;
     }
@@ -54,10 +55,48 @@ public class ItemsImpl implements ItemsService {
 
         Optional<ItemsEntity> idSearched = itemsRepository.findById(itemId);
 
-        if(idSearched.isPresent()) {
+        if (idSearched.isPresent()) {
+
+            item.setItemId(itemId);
+            itemsRepository.save(item);
+            return HttpStatus.ACCEPTED;
+
+        }
+        return HttpStatus.NOT_FOUND;
+    }
+
+    @Override
+    public HttpStatus removeFromStock(Long itemId, Long amount) {
+
+        Optional<ItemsEntity> idSearched = itemsRepository.findById(itemId);
+
+        if (idSearched.isPresent()) {
+
+            idSearched.get().setItemId(itemId);
+
+            if ( idSearched.get().getItemStockNumber() <= 0 || idSearched.get().getItemStockNumber() < amount) {
+                return HttpStatus.NOT_ACCEPTABLE;
+            }
+
+            idSearched.get().setItemStockNumber(idSearched.get().getItemStockNumber() - amount);
+            itemsRepository.save(idSearched.get());
+            return HttpStatus.ACCEPTED;
+        }
+
+
+        return HttpStatus.NOT_FOUND;
+    }
+
+    @Override
+    public HttpStatus addToStock(Long itemId, Long amount) {
+
+        Optional<ItemsEntity> idSearched = itemsRepository.findById(itemId);
+
+        if (idSearched.isPresent()) {
             idSearched.ifPresent(itemResult -> {
-                item.setItemId(itemId);
-                itemsRepository.save(item);
+                idSearched.get().setItemId(itemId);
+                idSearched.get().setItemStockNumber(idSearched.get().getItemStockNumber() + amount);
+                itemsRepository.save(idSearched.get());
             });
             return HttpStatus.ACCEPTED;
         }

@@ -14,4 +14,8 @@ public interface ItemsService {
     HttpStatus delete(Long itemId);
 
     HttpStatus update(Long itemId, ItemsEntity item);
+
+    HttpStatus removeFromStock(Long itemId, Long amount);
+
+    HttpStatus addToStock(Long itemId, Long amount);
 }

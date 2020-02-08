@@ -39,4 +39,14 @@ public class ItemsController {
         return itemsService.update(itemId, item);
     }
 
+    @PutMapping("/{itemId}/remove/{amount}")
+    public HttpStatus removeFromStockByItemId(@PathVariable Long itemId, @PathVariable Long amount) {
+        return itemsService.removeFromStock(itemId, amount);
+    }
+
+    @PutMapping("/{itemId}/add/{amount}")
+    public HttpStatus addToStockByItemId(@PathVariable Long itemId, @PathVariable Long amount) {
+        return itemsService.addToStock(itemId, amount);
+    }
+
 }
