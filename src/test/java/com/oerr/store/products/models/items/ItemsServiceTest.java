@@ -6,7 +6,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.util.Assert;
-import reactor.test.publisher.TestPublisher;
 
 import java.util.Arrays;
 import java.util.List;
@@ -27,44 +26,34 @@ public class ItemsServiceTest {
 
     @Mock
     private ItemsRepository itemsRepository;
-    TestPublisher<ItemsEntity> testPublisher;
 
     @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
         itemsService = new ItemsImpl(itemsRepository);
 
-        testPublisher = TestPublisher.create();
-
         item1 = new ItemsEntity(
-                1,
                 "Producto 1",
                 "Descripción de producto 1.",
-                50,
-                true
+                50
         );
 
         item2 = new ItemsEntity(
-                2,
                 "Producto 2",
                 "Descripción de producto 2.",
-                100,
-                true
+                100
         );
 
         item3 = new ItemsEntity(
-                3,
                 "Producto 3",
                 "Descripción de producto 3.",
-                0,
-                false
+                0
         );
         item3Updated = new ItemsEntity(
-                3,
+
                 "Producto 3",
                 "Nueva descripción.",
-                1,
-                true
+                1
         );
 
     }

@@ -51,8 +51,7 @@ public class ItemsControllerTest {
         HttpEntity<ItemsEntity> request = new HttpEntity<>(new ItemsEntity(
                 "Nombre de Prueba",
                 "Descripción de prueba",
-                20,
-                true
+                20
         ));
 
         ItemsEntity response = testRestTemplate.postForObject(ResourceUrl, request, ItemsEntity.class);
@@ -76,8 +75,7 @@ public class ItemsControllerTest {
         HttpEntity<ItemsEntity> request = new HttpEntity<>(new ItemsEntity(
                 "Nombre de Prueba",
                 "Descripción de prueba",
-                20,
-                true
+                20
         ));
 
         testRestTemplate.put(ResourceUrl+1, request);
@@ -91,8 +89,7 @@ public class ItemsControllerTest {
 
     @Test
     void methodAddToStockShouldUpdateExistingItem5To13Stock() {
-        HttpEntity<ItemsEntity> request = new HttpEntity<>(new ItemsEntity(
-        ));
+        HttpEntity<ItemsEntity> request = new HttpEntity<>(new ItemsEntity());
 
         testRestTemplate.put(ResourceUrl+"5/add/13",request);
 
@@ -105,8 +102,7 @@ public class ItemsControllerTest {
 
     @Test
     void methodRemoveFromStockShouldUpdateExistingItem4To2Stock() {
-        HttpEntity<ItemsEntity> request = new HttpEntity<>(new ItemsEntity(
-        ));
+        HttpEntity<ItemsEntity> request = new HttpEntity<>(new ItemsEntity());
 
         testRestTemplate.put(ResourceUrl+"4/remove/28",request);
 
@@ -116,8 +112,5 @@ public class ItemsControllerTest {
         assertEquals(2, response.getItemStockNumber());
         assertEquals("Casco de Batman para la motocicleta.", response.getItemDescription());
     }
-
-
-
 
 }

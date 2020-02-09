@@ -17,25 +17,15 @@ public class ItemsEntity {
     private String itemDescription;
 
     private long itemStockNumber;
-    private boolean itemHasStock;
 
     public ItemsEntity() {
     }
 
-    public ItemsEntity(String itemName, String itemDescription, int itemStockNumber, boolean itemHasStock) {
+    public ItemsEntity(String itemName, String itemDescription, int itemStockNumber) {
         this.itemName = itemName;
         this.itemDescription = itemDescription;
         this.itemStockNumber = itemStockNumber;
-        this.itemHasStock = itemHasStock;
 
-    }
-
-    public ItemsEntity(long itemId, String itemName, String itemDescription, int itemStockNumber, boolean itemHasStock) {
-        this.itemId = itemId;
-        this.itemName = itemName;
-        this.itemDescription = itemDescription;
-        this.itemStockNumber = itemStockNumber;
-        this.itemHasStock = itemHasStock;
     }
 
     public long getItemId() {
@@ -70,12 +60,5 @@ public class ItemsEntity {
         this.itemStockNumber = itemStockNumber;
     }
 
-    public boolean itemHasStock() {
-        return itemHasStock;
-    }
-
-    public void setItemHasStock(boolean itemHasStock) {
-        this.itemHasStock = itemHasStock;
-    }
 }
 
