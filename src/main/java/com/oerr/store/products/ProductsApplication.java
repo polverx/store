@@ -25,12 +25,11 @@ public class ProductsApplication implements CommandLineRunner {
 
         List<ItemsEntity> items = new ArrayList<>();
 
-        items.add(new ItemsEntity("Item 1","Descripción de prueba",10,true));
-        items.add(new ItemsEntity("Item 2","Descripción de prueba",20,true));
-        items.add(new ItemsEntity("Item 3","Descripción de prueba",30,true));
-        items.add(new ItemsEntity("Item 4","Descripción de prueba",100,true));
-        items.add(new ItemsEntity("Item 5","Descripción de prueba",0,true));
-
+        items.add(new ItemsEntity("Camiseta Capitán America","Camiseta con logo de Avengers y escudo de Capitán América.",10,true));
+        items.add(new ItemsEntity("Camiseta Ironspider","Camiseta para gym de Spiderman.",20,true));
+        items.add(new ItemsEntity("Teseracto","Cubo cósmico con propiedades interdimensionales.",1,true));
+        items.add(new ItemsEntity("Casco Batman","Casco de Batman para la motocicleta.",30,true));
+        items.add(new ItemsEntity("Libreta de IronMan","Libreta con dibujo de IronMan en la portada.",0,false));
 
         for (ItemsEntity item : items) {
             itemsService.save(item);

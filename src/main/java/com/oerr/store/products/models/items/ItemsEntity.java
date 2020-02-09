@@ -30,6 +30,14 @@ public class ItemsEntity {
 
     }
 
+    public ItemsEntity(long itemId, String itemName, String itemDescription, int itemStockNumber, boolean itemHasStock) {
+        this.itemId = itemId;
+        this.itemName = itemName;
+        this.itemDescription = itemDescription;
+        this.itemStockNumber = itemStockNumber;
+        this.itemHasStock = itemHasStock;
+    }
+
     public long getItemId() {
         return itemId;
     }
@@ -62,7 +70,7 @@ public class ItemsEntity {
         this.itemStockNumber = itemStockNumber;
     }
 
-    public boolean isItemHasStock() {
+    public boolean itemHasStock() {
         return itemHasStock;
     }
 

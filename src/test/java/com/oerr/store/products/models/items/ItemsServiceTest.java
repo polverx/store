@@ -23,6 +23,7 @@ public class ItemsServiceTest {
     ItemsEntity item1;
     ItemsEntity item2;
     ItemsEntity item3;
+    ItemsEntity item3Updated;
 
     @Mock
     private ItemsRepository itemsRepository;
@@ -36,6 +37,7 @@ public class ItemsServiceTest {
         testPublisher = TestPublisher.create();
 
         item1 = new ItemsEntity(
+                1,
                 "Producto 1",
                 "Descripción de producto 1.",
                 50,
@@ -43,6 +45,7 @@ public class ItemsServiceTest {
         );
 
         item2 = new ItemsEntity(
+                2,
                 "Producto 2",
                 "Descripción de producto 2.",
                 100,
@@ -50,13 +53,19 @@ public class ItemsServiceTest {
         );
 
         item3 = new ItemsEntity(
+                3,
                 "Producto 3",
                 "Descripción de producto 3.",
                 0,
                 false
         );
-
-
+        item3Updated = new ItemsEntity(
+                3,
+                "Producto 3",
+                "Nueva descripción.",
+                1,
+                true
+        );
 
     }
 
@@ -74,44 +83,63 @@ public class ItemsServiceTest {
 
     @Test
     void methodItemById2ShouldReturnItem2() {
-        ItemsEntity item = new ItemsEntity();
-        when(itemsRepository.findById(1L)).thenReturn(Optional.of(item));
 
-        Optional<ItemsEntity> itemById = itemsService.getById(1L);
+        when(itemsRepository.findById(2L)).thenReturn(Optional.of(item2));
+
+        Optional<ItemsEntity> itemById = itemsService.getById(2L);
 
         Assert.notNull(itemById.orElseThrow(), "El objeto no puede ser null");
+        verify(itemsRepository).findById(2L);
+    }
+
+    @Test
+    void methodSaveShouldReturnASavedItem() {
+        ItemsEntity testItem = item1;
+        when(itemsRepository.save(testItem)).thenReturn(testItem);
+
+        ItemsEntity savedItem = itemsService.save(testItem);
+
+        Assert.notNull(savedItem, "El objeto no puede ser null");
+        verify(itemsRepository).save(testItem);
+    }
+
+    @Test
+    void methodUpdateShouldReturnAnUpdatedItem() {
+
+        when(itemsRepository.save(item1)).thenReturn(item1);
+
+        HttpStatus updatedStatus = itemsService.update(1L, item1);
+
+        assertEquals(HttpStatus.NOT_FOUND, updatedStatus);
         verify(itemsRepository).findById(1L);
     }
 
     @Test
-    void methodShouldReturnASavedUser() {
-        ItemsEntity pet = new ItemsEntity();
-        when(itemsRepository.save(pet)).thenReturn(pet);
-
-        ItemsEntity savedPet = itemsService.save(pet);
-
-        Assert.notNull(savedPet, "El objeto no puede ser null");
-        verify(itemsRepository).save(pet);
-    }
-
-    @Test
-    void methodShouldReturnAnUpdatedUser() {
-        ItemsEntity item = new ItemsEntity("Producto 1", "Descripción de producto.", 50, true);
-        when(itemsRepository.save(item)).thenReturn(item);
-
-        HttpStatus updatedStatus = itemsService.update(1L, item);
-
-        assertEquals(updatedStatus, HttpStatus.ACCEPTED);
-        verify(itemsRepository).findById(1L);
-        //verify(petRepository).save(pet);
-    }
-
-    @Test
-    void methodShouldDeleteUser() {
+    void methodDeleteShouldDeleteItem() {
         HttpStatus deletedStatus = itemsService.delete(0L);
 
-        assertEquals(deletedStatus, HttpStatus.ACCEPTED);
+        assertEquals(HttpStatus.NOT_FOUND, deletedStatus);
         verify(itemsRepository).findById(0L);
+    }
+
+    @Test
+    void methodRemoveFromStockShouldRemoveItemsFromStock() {
+        when(itemsRepository.save(item1)).thenReturn(item1);
+
+        HttpStatus updatedStatus = itemsService.removeFromStock(1L, 50L);
+
+        assertEquals(HttpStatus.NOT_FOUND, updatedStatus);
+        verify(itemsRepository).findById(1L);
+    }
+
+    @Test
+    void methodAddToStockShouldAddItemsToStock() {
+        when(itemsRepository.save(item1)).thenReturn(item1);
+
+        HttpStatus updatedStatus = itemsService.addToStock(1L, 50L);
+
+        assertEquals(HttpStatus.NOT_FOUND, updatedStatus);
+        verify(itemsRepository).findById(1L);
     }
 
 }
